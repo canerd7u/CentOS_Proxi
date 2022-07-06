@@ -57,7 +57,7 @@ ipv6_olustur() {
 
 veri_olustur() {
     seq $IPV6_ILK_PORT $SON_PORT | while read port; do
-        echo "${KULLANICI}$(rastgele)/${SIFRE}$(rastgele)/$IP4/$port/$(ipv6_olustur $IP6)"
+        echo "${KULLANICI}/${SIFRE}/$IP4/$port/$(ipv6_olustur $IP6)"
     done
 }
 

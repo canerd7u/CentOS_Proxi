@@ -2,8 +2,8 @@
 # Bu araç @keyiflerolsun tarafından | @KekikAkademi için yazılmıştır.
 
 #------------------#
-KULLANICI="tarak"
-SIFRE="kurek"
+KULLANICI="admin"
+SIFRE="1234"
 #------------------#
 
 #------------------#
@@ -57,7 +57,7 @@ ipv6_olustur() {
 
 veri_olustur() {
     seq $IPV6_ILK_PORT $SON_PORT | while read port; do
-        echo "${KULLANICI}$(rastgele)/${SIFRE}$(rastgele)/$IP4/$port/$(ipv6_olustur $IP6)"
+        echo "${KULLANICI}/${SIFRE}/$IP4/$port/$(ipv6_olustur $IP6)"
     done
 }
 
@@ -84,10 +84,10 @@ setuid 65535
 flush
 auth strong
 
-users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${VERI})
+users "$KULLANICI":CL:"$SIFRE"
 
 $(awk -F "/" '{print "auth strong\n" \
-"allow " $1 "\n" \
+"allow " $KULLANICI "\n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${VERI})
 EOF
@@ -123,7 +123,7 @@ EOF
 
 proxy_txt() {
     cat >proxy.txt <<EOF
-$(awk -F "/" '{print $3 ":" $4 ":" $1 ":" $2 }' ${VERI})
+$(awk -F "/" '{print $3 ":" $4 ":" $KULLANICI ":" $SIFRE }' ${VERI})
 EOF
 }
 

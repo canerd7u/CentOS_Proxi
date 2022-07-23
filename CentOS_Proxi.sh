@@ -150,6 +150,20 @@ file_io_yukle() {
     echo -e "$mor IPv6 Zip Şifresi:$yesil ${PASS}$renkreset"
 }
 
+config_ayarla(){
+    echo "net.ipv6.conf.all.proxy_ndp=1" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.default.forwarding=1" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.all.forwarding=1" >> /etc/sysctl.conf
+    echo "net.ipv6.ip_nonlocal_bind=1" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.all.disable_ipv6 = 0" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.default.disable_ipv6 = 0" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.lo.disable_ipv6 = 0" >> /etc/sysctl.conf
+    echo "vm.max_map_count=95120" >> /etc/sysctl.conf
+    echo "kernel.pid_max=95120" >> /etc/sysctl.conf
+    echo "net.ipv4.ip_local_port_range=1024 65000" >> /etc/sysctl.conf
+    sysctl -p
+}
+
 socks5_yukle() {
     echo -e "\n\n\t$yesil Dante SOCKS5 Yükleniyor..\n$renkreset\n"
 
@@ -206,7 +220,7 @@ EOF
 
 bash /etc/rc.local
 
-squid_yukle && socks5_yukle && proxy_txt && jq_yukle && file_io_yukle
+squid_yukle && socks5_yukle && proxy_txt && jq_yukle && file_io_yukle && config_ayarla
 
 echo -e "\n$sari IPv4   Proxy »$yesil ${IP4}:${IPV4_PORT}:${KULLANICI}:${SIFRE}$renkreset"
 echo -e "$sari SOCKS5 Proxy »$yesil ${IP4}:${SOCKS5_PORT}:${KULLANICI}:${SIFRE}$renkreset\n"

@@ -200,9 +200,7 @@ ifconfig_olustur >$YOL/ifconfig_yapilandir.sh
 config_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 
 cat >>/etc/rc.local <<EOF
-bash ${YOL}/iptable_yapilandir.sh >/dev/null
-bash ${YOL}/ifconfig_yapilandir.sh >/dev/null
-ulimit -n 10048
+ulimit -n 600000
 service 3proxy start
 EOF
 
